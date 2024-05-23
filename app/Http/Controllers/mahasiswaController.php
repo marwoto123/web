@@ -12,9 +12,22 @@ class mahasiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     { 
-        $data = mahasiswa::orderBy('nim','desc')->paginate(10);
+        $katakunci =$request -> katakunci;
+        $jumlahbaris = 3;
+        if(strlen($katakunci)){
+        $data = mahasiswa::where('nim','like',"%$katakunci%")
+        ->orWhere('nama','like',"%$katakunci%")
+        ->orWhere('jurusan','like',"%$katakunci%")
+        ->paginate($jumlahbaris);
+
+        }
+        else{
+            
+            $data = mahasiswa::orderBy('nim','desc')->paginate($jumlahbaris);
+        }
+
         return view('mahasiswa.index')->with('data',$data);
     }
 
