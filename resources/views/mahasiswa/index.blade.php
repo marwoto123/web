@@ -14,7 +14,7 @@
         <div class="pb-3">
             <a href='{{ url('mahasiswa/create') }}' class="btn btn-primary">+ Tambah Data</a>
         </div>
-        {{ $data->links() }}
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -35,7 +35,7 @@
                         <td>{{ $item->jurusan }}</td>
                         <td>
                             <a href='{{ url('mahasiswa/' . $item->nim . '/edit') }}' class="btn btn-warning btn-sm">Edit</a>
-                            <form class="d-inline" action="{{ url('mahasiswa/' . $item->nim) }}" method="POST">
+                            <form onsubmit="return confirm('yakin mau delete')" class="d-inline" action="{{ url('mahasiswa/' . $item->nim) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" name="submit"class="btn btn-danger btn-sm">del</button>
@@ -46,7 +46,7 @@
                 @endforeach
             </tbody>
         </table>
-        
+        {{ $data->links() }}
     </div>
     <!-- AKHIR DATA -->
 @endsection
